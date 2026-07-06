@@ -1,0 +1,21 @@
+# Deterministic, versioned data pipeline.
+pipeline_version: "0.1.0"
+seed: 42
+
+source:
+  hf_dataset: "bitext/Bitext-customer-support-llm-chatbot-training-dataset"
+  split: "train"
+  license: "Apache-2.0"
+
+paths:
+  raw_dir: "data/raw"
+  interim_dir: "data/interim"
+  processed_dir: "data/processed"
+
+split:
+  stratify_by: "intent"
+  ratios: { train: 0.80, val: 0.10, test: 0.10 }   # test held out
+
+derivation:
+  strategy: "rules"
+  rules_version: "0.1.0"

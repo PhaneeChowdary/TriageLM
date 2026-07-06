@@ -1,0 +1,58 @@
+# Label vocabularies from the dataset profile.
+schema_version: "0.1.0"
+
+categories:
+  - ACCOUNT
+  - CANCEL
+  - CONTACT
+  - DELIVERY
+  - FEEDBACK
+  - INVOICE
+  - ORDER
+  - PAYMENT
+  - REFUND
+  - SHIPPING
+  - SUBSCRIPTION
+
+intents:
+  - cancel_order
+  - change_order
+  - change_shipping_address
+  - check_cancellation_fee
+  - check_invoice
+  - check_payment_methods
+  - check_refund_policy
+  - complaint
+  - contact_customer_service
+  - contact_human_agent
+  - create_account
+  - delete_account
+  - delivery_options
+  - delivery_period
+  - edit_account
+  - get_invoice
+  - get_refund
+  - newsletter_subscription
+  - payment_issue
+  - place_order
+  - recover_password
+  - registration_problems
+  - review
+  - set_up_shipping_address
+  - switch_account
+  - track_order
+  - track_refund
+
+# entity_slots: our schema key from Bitext placeholders
+entity_slots:
+  - order_id           # Order Number
+  - account_type       # Account Type
+  - account_category   # Account Category
+  - person_name        # Person Name
+  - refund_amount      # Refund Amount + Currency Symbol
+  - delivery_city      # Delivery City
+  - delivery_country   # Delivery Country
+  - invoice_id         # Invoice Number
+
+priorities: [low, medium, high]
+queues: [account, billing, feedback, logistics, orders, support]

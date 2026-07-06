@@ -1,0 +1,17 @@
+# Fine-tuned model eval, run via Ollama.
+seed: 42
+
+model:
+  name: "triage-ft"            # ollama create triage-ft -f Modelfile
+  backend: "ollama"
+
+prompt:
+  strategy: "trained"          # short training prompt, no few-shot
+  num_shots: 0
+  include_schema: false
+
+decoding:
+  max_new_tokens: 256
+  temperature: 0.0
+
+eval_config: "configs/eval.yaml"

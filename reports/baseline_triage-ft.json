@@ -1,0 +1,34 @@
+{
+  "triage-ft (clean)": {
+    "n": 500,
+    "json_parse_rate": 1.0,
+    "schema_valid_rate": 1.0,
+    "intent_macro_f1": 1.0,
+    "category_accuracy": 1.0,
+    "entity": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 123,
+      "fp": 0,
+      "fn": 0
+    },
+    "latency_ms_mean": 1653.988480732136
+  },
+  "triage-ft (OOD)": {
+    "n": 500,
+    "json_parse_rate": 0.998,
+    "schema_valid_rate": 0.998,
+    "intent_macro_f1": 0.8763480818604575,
+    "category_accuracy": 0.914,
+    "entity": {
+      "precision": 0.49107142857142855,
+      "recall": 0.8943089430894309,
+      "f1": 0.6340057636887607,
+      "tp": 110,
+      "fp": 114,
+      "fn": 13
+    },
+    "latency_ms_mean": 1674.1833640119876
+  }
+}

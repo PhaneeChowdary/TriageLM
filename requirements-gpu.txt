@@ -1,0 +1,12 @@
+# GPU-only, for the Kaggle T4 training box. Do not install on macOS.
+# Versions below are what the successful Kaggle run reported on 2026-07-05.
+# The four marked TODO still need exact pins from `pip freeze` to fully lock.
+unsloth==2026.6.9
+transformers==5.5.0
+xformers==0.0.35
+triton==3.6.0
+trl>=0.9             # TODO: pin from pip freeze
+peft>=0.11           # TODO: pin from pip freeze
+bitsandbytes>=0.43   # TODO: pin from pip freeze
+accelerate>=0.31     # TODO: pin from pip freeze
+# torch comes from the Kaggle CUDA image, do not pin.

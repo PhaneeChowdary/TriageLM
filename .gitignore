@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.python-version.local
+
+# Env / secrets
+.env
+.env.*
+
+blog-draft.md
+
+# Tooling caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Data & model artifacts (reproduced from pipeline, never committed)
+data/raw/*
+data/interim/*
+data/processed/*
+!data/**/.gitkeep
+*.parquet
+*.arrow
+adapters/
+outputs/
+checkpoints/
+kaggle_bundle.zip
+*.gguf
+Modelfile
+
+# Experiment tracking
+wandb/
+
+# Reports: keep committed tables/figures, ignore scratch
+reports/*.tmp
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/

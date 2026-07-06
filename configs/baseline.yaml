@@ -1,0 +1,18 @@
+# Base-model baseline: the "should we even fine-tune?" gate.
+seed: 42
+
+model:
+  name: "llama3.2:3b"          # local Ollama model
+  backend: "ollama"            # ollama or hf
+  load_in_4bit: true           # hf backend only
+
+prompt:
+  strategy: "few_shot"
+  num_shots: 3
+  include_schema: true
+
+decoding:
+  max_new_tokens: 256
+  temperature: 0.0
+
+eval_config: "configs/eval.yaml"

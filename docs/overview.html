@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ticket Triage - Project Overview</title>
+<style>
+  :root {
+    --bg: #f6f7fb; --panel: #ffffff; --ink: #1f2430; --muted: #5b6172;
+    --line: #e6e8ef; --accent: #6366f1; --accent-soft: #eef0ff;
+    --good: #16a34a; --warn: #d97706; --code-bg: #0f1222; --code-ink: #e7e9f5;
+    --chip: #f0f2f8;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0d1017; --panel: #151925; --ink: #e8eaf2; --muted: #9aa1b5;
+      --line: #242a3a; --accent: #8b8ff6; --accent-soft: #1c2136;
+      --good: #4ade80; --warn: #fbbf24; --code-bg: #0a0c16; --code-ink: #e7e9f5;
+      --chip: #1c2233;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 32px 20px 80px; }
+  header.hero {
+    background: linear-gradient(135deg, var(--accent-soft), transparent);
+    border: 1px solid var(--line); border-radius: 18px; padding: 32px;
+  }
+  h1 { font-size: 1.9rem; margin: 0 0 6px; letter-spacing: -0.02em; }
+  .tag { color: var(--accent); font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; }
+  .lead { color: var(--muted); font-size: 1.05rem; margin: 10px 0 0; }
+  h2 { font-size: 1.35rem; margin: 44px 0 4px; letter-spacing: -0.01em; }
+  h2 .num { color: var(--accent); font-variant-numeric: tabular-nums; margin-right: 8px; }
+  .sub { color: var(--muted); margin: 0 0 18px; }
+  p { margin: 12px 0; }
+  a { color: var(--accent); }
+  .grid { display: grid; gap: 14px; }
+  .cards { grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+  .card {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 14px; padding: 16px 18px;
+  }
+  .card h3 { margin: 0 0 6px; font-size: 1rem; }
+  .card p { margin: 0; color: var(--muted); font-size: 0.92rem; }
+  .badges { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+  .badge {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 999px;
+    padding: 7px 14px; font-size: 0.85rem; font-weight: 600;
+  }
+  .badge b { color: var(--good); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    background: var(--chip); border: 1px solid var(--line); border-radius: 8px;
+    padding: 5px 11px; font-size: 0.85rem; font-weight: 500;
+  }
+  .flow { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); counter-reset: step; }
+  .step {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+    padding: 14px; position: relative;
+  }
+  .step::before {
+    counter-increment: step; content: counter(step);
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 24px; height: 24px; border-radius: 7px; margin-bottom: 8px;
+    background: var(--accent); color: #fff; font-size: 0.8rem; font-weight: 700;
+  }
+  .step h4 { margin: 0 0 4px; font-size: 0.95rem; }
+  .step p { margin: 0; color: var(--muted); font-size: 0.85rem; }
+  .step .file { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.78rem; color: var(--accent); }
+  table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 0.9rem; }
+  th, td { text-align: center; padding: 9px 10px; border-bottom: 1px solid var(--line); }
+  th:first-child, td:first-child { text-align: left; }
+  thead th { color: var(--muted); font-weight: 600; font-size: 0.82rem; }
+  tbody tr td b { color: var(--good); }
+  .win { color: var(--good); font-weight: 700; }
+  pre {
+    background: var(--code-bg); color: var(--code-ink); border-radius: 12px;
+    padding: 16px 18px; overflow-x: auto; font-size: 0.85rem; line-height: 1.5;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .tree { white-space: pre; }
+  .note {
+    border-left: 3px solid var(--warn); background: var(--panel);
+    border-radius: 0 10px 10px 0; padding: 12px 16px; margin: 16px 0; color: var(--muted);
+  }
+  .note b { color: var(--ink); }
+  code {
+    background: var(--chip); border-radius: 5px; padding: 1px 6px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.85em;
+  }
+  footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="tag">Portfolio project</div>
+    <h1>Ticket Triage: fine-tuning a small LLM for structured output</h1>
+    <p class="lead">Turn a raw customer support message into a strict JSON object
+      (intent, category, entities, priority, routing) with a QLoRA-fine-tuned
+      Llama-3.2-3B. A "form, not facts" task, done the disciplined way: measure first,
+      fine-tune second, stay honest about the numbers.</p>
+    <div class="badges">
+      <span class="badge">Intent F1 <b>0.585 to 1.000</b></span>
+      <span class="badge">OOD F1 <b>0.344 to 0.876</b></span>
+      <span class="badge">Prompt tokens <b>-86%</b></span>
+      <span class="badge">27 tests, lint clean</span>
+    </div>
+  </header>
+
+  <h2>What this is (and is not)</h2>
+  <p class="sub">The single decision the whole project hangs on.</p>
+  <p>Fine-tuning is good at teaching a model a <b>form</b>: a fixed output shape and a
+    stable set of labels. It is bad at teaching a model <b>facts</b>, because facts
+    change and a fine-tune freezes them in place.</p>
+  <div class="grid cards">
+    <div class="card">
+      <h3>In scope: triage</h3>
+      <p>Classify the message into intent, category, entities, and a routing decision.
+        Fixed schema, stable labels. This is a form problem, so fine-tuning fits.</p>
+    </div>
+    <div class="card">
+      <h3>Out of scope: answering</h3>
+      <p>Actually resolving the ticket needs current knowledge. That is a
+        retrieval/RAG problem, not fine-tuning. Deliberately excluded.</p>
+    </div>
+  </div>
+
+  <h2>Tech stack</h2>
+  <p class="sub">All free, reproducible, and split cleanly between local (CPU) and GPU.</p>
+  <div class="grid cards">
+    <div class="card">
+      <h3>Data and modelling</h3>
+      <p>Hugging Face <code>datasets</code> and <code>transformers</code>, pydantic v2
+        for the schema, pandas, scikit-learn for the split and metrics.</p>
+    </div>
+    <div class="card">
+      <h3>Fine-tuning (GPU)</h3>
+      <p>Unsloth + TRL + PEFT + bitsandbytes for QLoRA on a free Kaggle T4. Adapter and
+        GGUF pushed to the Hugging Face Hub.</p>
+    </div>
+    <div class="card">
+      <h3>Inference and eval</h3>
+      <p>Ollama runs both the base model and the fine-tuned GGUF locally, behind one
+        generator interface, so evals need no GPU.</p>
+    </div>
+    <div class="card">
+      <h3>Tooling</h3>
+      <p>uv for the environment and pinned deps, YAML-driven configs, pytest and ruff,
+        a Makefile, and optional Weights and Biases tracking.</p>
+    </div>
+  </div>
+  <div class="chips" style="margin-top:14px">
+    <span class="chip">Python 3.11</span><span class="chip">uv</span>
+    <span class="chip">pydantic</span><span class="chip">HF datasets</span>
+    <span class="chip">transformers</span><span class="chip">Unsloth</span>
+    <span class="chip">TRL / PEFT</span><span class="chip">bitsandbytes</span>
+    <span class="chip">QLoRA (r16, a32, 4-bit)</span><span class="chip">Llama-3.2-3B</span>
+    <span class="chip">Ollama</span><span class="chip">Kaggle T4</span>
+    <span class="chip">scikit-learn</span><span class="chip">pytest + ruff</span>
+  </div>
+
+  <h2>End-to-end process</h2>
+  <p class="sub">Every step is deterministic, config-driven, and unit-tested.</p>
+  <div class="flow">
+    <div class="step"><h4>Download</h4><p>Pull Bitext, 26,872 rows.</p><span class="file">data/download.py</span></div>
+    <div class="step"><h4>Explore</h4><p>Profile 27 intents, 11 categories, entity slots.</p><span class="file">data/explore.py</span></div>
+    <div class="step"><h4>Schema</h4><p>pydantic model + validator for the JSON.</p><span class="file">schema.py</span></div>
+    <div class="step"><h4>Derive</h4><p>Rules for priority, requires_human, queue.</p><span class="file">data/derive.py</span></div>
+    <div class="step"><h4>Reformat</h4><p>Raw to chat JSONL with derived fields.</p><span class="file">data/reformat.py</span></div>
+    <div class="step"><h4>Split</h4><p>Stratified train/val/test, test held out.</p><span class="file">data/split.py</span></div>
+    <div class="step"><h4>Eval harness</h4><p>Metrics + OOD slice, the core value.</p><span class="file">eval/*.py</span></div>
+    <div class="step"><h4>Baseline</h4><p>The "should we fine-tune?" gate.</p><span class="file">run_baseline.py</span></div>
+    <div class="step"><h4>QLoRA train</h4><p>Unsloth on Kaggle T4, ~1 hour.</p><span class="file">train_qlora.py</span></div>
+    <div class="step"><h4>Export GGUF</h4><p>Merge + quantize for Ollama.</p><span class="file">train_qlora.py</span></div>
+    <div class="step"><h4>Re-eval</h4><p>Fine-tune through the same harness.</p><span class="file">finetuned.yaml</span></div>
+    <div class="step"><h4>Compare</h4><p>One head-to-head table.</p><span class="file">compare_reports.py</span></div>
+  </div>
+
+  <h2>The output schema</h2>
+  <p class="sub">Every ticket becomes exactly this object. Extra keys are rejected.</p>
+  <pre>{
+  "intent": "cancel_order",            // 1 of 27 gold labels
+  "category": "ORDER",                 // 1 of 11 gold labels
+  "entities": {                        // 8 fixed slots, null when absent
+    "order_id": "{{Order Number}}",
+    "account_type": null, "account_category": null, "person_name": null,
+    "refund_amount": null, "delivery_city": null,
+    "delivery_country": null, "invoice_id": null
+  },
+  "priority": "high",                  // derived by rules
+  "requires_human": false,             // derived by rules
+  "suggested_queue": "orders"          // derived by rules
+}</pre>
+  <div class="note"><b>Honesty note:</b> priority, requires_human, and suggested_queue
+    are not in the dataset. They come from a documented, versioned rules policy that I
+    authored, so the model can only be as good as that policy. This is written down,
+    not hidden.</div>
+
+  <h2>Results</h2>
+  <p class="sub">Base vs fine-tune, same 500-row stratified test sample, via Ollama.</p>
+  <table>
+    <thead><tr><th>Model</th><th>Schema %</th><th>Intent F1</th><th>Cat acc</th><th>Entity F1</th><th>Prompt tokens</th></tr></thead>
+    <tbody>
+      <tr><td>Base (schema + few-shot prompt)</td><td>100</td><td>0.585</td><td>0.734</td><td>0.726</td><td>583</td></tr>
+      <tr><td>Fine-tuned (short prompt)</td><td>100</td><td><b>1.000</b></td><td><b>1.000</b></td><td><b>1.000</b></td><td><b>81</b></td></tr>
+    </tbody>
+  </table>
+  <p><b>Robustness</b> on the OOD slice (typos, concatenated tickets, irrelevant preamble):</p>
+  <table>
+    <thead><tr><th>Model</th><th>Schema %</th><th>Intent F1</th><th>Cat acc</th><th>Entity F1</th></tr></thead>
+    <tbody>
+      <tr><td>Base</td><td>84.0</td><td>0.344</td><td>0.376</td><td>0.393</td></tr>
+      <tr><td>Fine-tuned</td><td><b>99.8</b></td><td><b>0.876</b></td><td><b>0.914</b></td><td><b>0.634</b></td></tr>
+    </tbody>
+  </table>
+  <div class="note"><b>Read the clean 1.000 with skepticism.</b> Bitext is synthetic and
+    templated, so the test set shares templates with training and the model essentially
+    memorizes them. The <b>OOD numbers are the honest signal</b>; a real messy-data test
+    is the true bar and is the planned next step.</div>
+
+  <h2>Project structure</h2>
+  <pre class="tree">configs/     YAML run configs (data, schema, eval, baseline, finetuned, train_qlora)
+src/ticket_triage/
+  schema.py        pydantic output schema + validator
+  config.py        YAML config loader
+  data/            download . explore . derive . reformat . split
+  eval/            harness . metrics . parse . robustness . judge . report
+  models/          generator (interface + Mock) . ollama . prompts
+  utils/           seed
+scripts/     run_pipeline . smoke_test . run_baseline . train_qlora
+             compare_reports . push_dataset . manual_review
+tests/       one test file per module
+notebooks/   train_qlora.ipynb (QLoRA training on Kaggle)</pre>
+
+  <h2>How to run</h2>
+  <p class="sub">Local half is CPU-only; only training needs a GPU.</p>
+  <pre># 1. Local pipeline + tests (no GPU)
+make setup && make test && make smoke
+make data
+
+# 2. Baseline gate (needs Ollama)
+ollama pull llama3.2:3b
+make eval-baseline
+
+# 3. Fine-tune on Kaggle
+make bundle            # upload kaggle_bundle.zip + run notebooks/train_qlora.ipynb
+
+# 4. Evaluate the fine-tune and compare
+ollama create triage-ft -f Modelfile
+make eval-finetuned
+make compare</pre>
+
+  <h2>Why this project, not another chatbot</h2>
+  <div class="grid cards">
+    <div class="card"><h3>Right tool for the task</h3><p>Triage is a form problem, so fine-tuning is the correct choice, and the README says exactly when it is not.</p></div>
+    <div class="card"><h3>Eval before model</h3><p>The scoring harness was built and smoke-tested before any GPU spend. A fine-tune you cannot measure is just vibes.</p></div>
+    <div class="card"><h3>A real gate</h3><p>The base model was measured first (intent F1 0.585). Fine-tuning only proceeded because there was clear room to improve.</p></div>
+    <div class="card"><h3>Intellectual honesty</h3><p>Authored labels are flagged as policy, and the too-perfect clean score is called out rather than celebrated.</p></div>
+  </div>
+
+  <footer>
+    Ticket Triage - form-not-facts fine-tuning demo. Base model Llama-3.2-3B,
+    QLoRA (rank 16, alpha 32, 4-bit) via Unsloth. Data: Bitext customer-support
+    dataset (Apache-2.0). See <code>README.md</code> for the full run guide and
+    <code>blog-draft.md</code> for the write-up.
+  </footer>
+
+</div>
+</body>
+</html>

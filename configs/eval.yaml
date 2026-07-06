@@ -1,0 +1,32 @@
+# Evaluation harness config.
+seed: 42
+
+metrics:
+  json_parse_rate: true
+  schema_valid_rate: true
+  intent_macro_f1: true
+  category_accuracy: true
+  entity_prf: true
+
+robustness:                    # OOD slice: corrupt held-out test inputs
+  enabled: true
+  transforms:
+    typos: { enabled: true, rate: 0.05 }
+    concat_tickets: { enabled: true, n: 2 }
+    irrelevant_preamble: { enabled: true }
+  seed: 1234
+
+cost:
+  track_prompt_tokens: true
+  track_latency: true
+  price_per_1m_input_tokens: null
+  price_per_1m_output_tokens: null
+
+judge:                         # LLM-as-judge, off by default
+  enabled: false
+  model: null
+  sample_rate: 0.05            # also used by scripts/manual_review.py
+
+reporting:
+  out_dir: "reports"
+  write_markdown_table: true
