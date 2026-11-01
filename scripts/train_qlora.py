@@ -13,7 +13,7 @@ import json
 import os
 from pathlib import Path
 
-from ticket_triage.config import load_config
+from ticket_triage.config import load_training_config
 
 
 def _load_jsonl(path: str) -> list[dict]:
@@ -22,7 +22,7 @@ def _load_jsonl(path: str) -> list[dict]:
 
 
 def main(config_path: str) -> None:
-    cfg = load_config(config_path)
+    cfg = load_training_config(config_path)
 
     # Import unsloth first so it can patch trl/transformers/peft.
     from unsloth import FastLanguageModel, is_bfloat16_supported  # noqa: I001

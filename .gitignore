@@ -1,28 +1,22 @@
 # Python
+.venv/
 __pycache__/
 *.py[cod]
 *.egg-info/
-.eggs/
 build/
 dist/
-.venv/
-venv/
-.python-version.local
-
-# Env / secrets
-.env
-.env.*
-
-blog-draft.md
-
-# Tooling caches
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/
 .coverage
 htmlcov/
 
-# Data & model artifacts (reproduced from pipeline, never committed)
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Data and model artifacts: make data and the Kaggle notebook make them again
 data/raw/*
 data/interim/*
 data/processed/*
@@ -35,14 +29,14 @@ checkpoints/
 kaggle_bundle.zip
 *.gguf
 Modelfile
-
-# Experiment tracking
 wandb/
-
-# Reports: keep committed tables/figures, ignore scratch
 reports/*.tmp
 
-# OS / editor
+# Drafts
+blog-draft.md
+
+# OS and editors
 .DS_Store
 .idea/
 .vscode/
+.claude/

@@ -29,8 +29,8 @@ data:
 
 output:
   adapter_dir: "adapters/llama-3.2-3b-triage"
-  push_to_hub: true
-  hub_repo_id: "phanee5/ticket-triage-llama-3.2-3b-qlora"
+  push_to_hub: false
+  hub_repo_id: null           # set TRIAGE_HUB_REPO_ID in .env or the environment
   export_gguf: true            # for step-9 re-eval back in Ollama
   gguf_quant: "q4_k_m"
 
