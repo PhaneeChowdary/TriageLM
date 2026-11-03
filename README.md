@@ -6,8 +6,7 @@
 Turn a raw customer support message into a strict JSON object with a QLoRA-fine-tuned Llama-3.2-3B.
 
 This is a "form, not facts" task: the model learns a fixed output schema, not how to
-answer tickets. A visual
-overview is in `docs/overview.html`.
+answer tickets. A visual overview is in `docs/overview.html`.
 
 One message from the test set and the JSON the model must return:
 
@@ -94,18 +93,15 @@ notebooks/           train_qlora.ipynb (QLoRA training on Kaggle)
 MIT, see [LICENSE](LICENSE). The Bitext dataset is Apache-2.0 and the base model
 Llama-3.2 is under the Llama Community License.
 
-## Private training settings
+## Upload to Hugging Face
 
-The training script loads `.env` from the project folder. Shell and notebook environment variables take precedence over `.env`. YAML provides the defaults.
-
-Copy `.env.example` to `.env` on a new machine. Set `TRIAGE_HUB_REPO_ID` to your Hugging Face `owner/repository`. Set `TRIAGE_PUSH_TO_HUB=true` to upload after training and local export. Use your existing Hugging Face login or provide `HF_TOKEN` privately. No token is included in the example.
-
-For a local-only run, override the upload setting for that command:
+Training saves the adapter locally. To also upload it, copy `.env.example` to `.env` and set:
 
 ```bash
-TRIAGE_PUSH_TO_HUB=false python scripts/train_qlora.py --config configs/train_qlora.yaml
+TRIAGE_PUSH_TO_HUB=true
+TRIAGE_HUB_REPO_ID=<owner>/<repository>
 ```
 
-This switch only controls uploads. Training and local model files work with either setting. QLoRA training still requires a supported CUDA GPU; this change does not add Mac training support.
+Environment variables override `.env`, and `.env` overrides `configs/train_qlora.yaml`. On Kaggle, set the two variables in the notebook and put `HF_TOKEN` in Kaggle Secrets. `make bundle` does not include `.env`.
 
-`.env` is ignored by Git and is not included by `make bundle`. On Kaggle, set the two `TRIAGE_` variables in the notebook environment before running the training script. Keep the Hugging Face token in Kaggle Secrets. With no private settings, bundled code saves locally without uploading.
+Training needs a CUDA GPU.
